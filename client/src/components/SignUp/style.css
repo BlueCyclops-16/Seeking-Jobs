@@ -1,0 +1,42 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.signup-content {
+  margin-top: 2%;
+  box-shadow: 11px 12px 13px 12px rgb(206, 207, 207);
+  padding-top: 80px;
+  border-radius: 60px;
+  background-color: white;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding-bottom: 15px;
+}
+.signpic-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+.signup-form {
+  margin-top: 2px;
+  /* background-color: aqua; */
+}
+.form-group {
+  padding: 5px 3px;
+}
+.form-group h2 {
+  font-family: "Courier New", Courier, monospace;
+}
+.form-group label i {
+  padding-right: 8px;
+}
+input {
+  outline: none;
+}
+.form-button {
+  color: brown;
+}
