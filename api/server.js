@@ -10,14 +10,19 @@ app.use(express.json({ extended: true }));
 
 connectDB();
 
-const PORT = 80;
+const PORT = process.env.PORT || 80;
 
-app.use(require('./router/route'));
 
 app.get("/", (req, res) => {
     res.send("API Running");
     console.log("API is running");
 })
+
+// Define routes
+app.use('/signUpCompany', require('./routes/registerCompany'));
+app.use('/signUpUser', require('./routes/registerUser'));
+app.use('/api/profile', require('./routes/api/profile'));
+app.use('/api/posts', require('./routes/api/posts'));
 
 app.listen(PORT, () => {
     console.log(`Server running at port ${PORT}.`);

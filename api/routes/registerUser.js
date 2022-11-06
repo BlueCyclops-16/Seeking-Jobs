@@ -1,18 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-
 const app = express();
 require("../db/connection");
 
 const User = require('../models/User');
-const { response } = require('express');
+const Company = require('../models/Company');
 
 router.get('/', (req, res) => {
     res.send("Server is Responding.");
 })
 
-router.post('/signUpUser', async (req, res) => {
+router.post('/',
+
+    body('name', 'Name is required').not().isEmpty(),
+    body('email', 'Email should be valid').isEmail(),
+    body('password', 'Password should be of minimum length 5.').isLength({ min: 5 }),
+
+async (req, res) => {
 
     console.log(req.body);
     const { name, email, password, cpassword } = req.body;
@@ -40,6 +45,9 @@ router.post('/signUpUser', async (req, res) => {
     } catch (err) {
         console.error(err.message);
     }
-})
+});
+
+
+
 
 module.exports = router;
