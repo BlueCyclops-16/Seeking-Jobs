@@ -1,7 +1,10 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LogInUser = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -15,7 +18,30 @@ const LogInUser = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("SUCCESS");
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        method: "POST",
+      },
+    };
+    const body = JSON.stringify({
+      email,
+      password,
+    });
+
+    const response = await fetch("/logInUser", config, body);
+
+    const data = await response;
+
+    if (response.status === 421 || !data) {
+      window.alert("Invalid Request");
+      console.log("Invalid Request");
+    } else {
+      window.alert("Successfully loged in");
+      console.log("Successfully loged in");
+      navigate("/");
+    }
   };
 
   return (
