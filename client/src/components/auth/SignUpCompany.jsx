@@ -25,20 +25,18 @@ function SignUpCompany() {
   const sendData = async (event) => {
     event.preventDefault();
 
-    const body = JSON.stringify({
-      companyname,
-      email,
-      password,
-      cpassword,
-    });
-    const config = {
+    const response = await fetch("/signUpUser", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
-        method: "POST"
-      }
-    };
-
-    const response = await fetch("/signUpUser", config, body);
+      },
+      body: JSON.stringify({
+        companyname,
+        email,
+        password,
+        cpassword,
+      }),
+    });
 
     const data = await response;
 

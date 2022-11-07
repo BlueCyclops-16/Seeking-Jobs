@@ -3,9 +3,9 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const app = express();
 require("../db/connection");
+const { body, validationResult } = require('express-validator');
 
 const User = require('../models/User');
-const Company = require('../models/Company');
 
 router.get('/', (req, res) => {
     res.send("Server is Responding.");
@@ -18,6 +18,12 @@ router.post('/',
     body('password', 'Password should be of minimum length 5.').isLength({ min: 5 }),
 
 async (req, res) => {
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() })
+    }
 
     console.log(req.body);
     const { name, email, password, cpassword } = req.body;
@@ -40,14 +46,13 @@ async (req, res) => {
 
             await user.save();
             console.log("User Saved")
+            console.log(user);
             return res.sendStatus(201).json({ message: "User Registered" });
         }
     } catch (err) {
         console.error(err.message);
     }
 });
-
-
 
 
 module.exports = router;

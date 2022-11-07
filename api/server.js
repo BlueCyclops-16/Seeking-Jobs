@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const connectDB = require('./db/connection');
 const express = require('express');
-const User = require('./models/User');
 
 const app = express();
 
@@ -19,10 +18,11 @@ app.get("/", (req, res) => {
 })
 
 // Define routes
+app.use('/signUpUser', require('./routes/registerUser'));;
 app.use('/signUpCompany', require('./routes/registerCompany'));
-app.use('/signUpUser', require('./routes/registerUser'));
-app.use('/api/profile', require('./routes/api/profile'));
-app.use('/api/posts', require('./routes/api/posts'));
+// app.use('/logInUser', require('./routes/logInUser'))
+// app.use('/api/profile', require('./routes/api/profile'));
+// app.use('/api/posts', require('./routes/api/posts'));
 
 app.listen(PORT, () => {
     console.log(`Server running at port ${PORT}.`);

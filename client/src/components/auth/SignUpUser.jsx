@@ -29,20 +29,18 @@ function SignUpUser() {
     event.preventDefault();
 
 
-    const body = JSON.stringify({
-      name,
-      email,
-      password,
-      cpassword,
-    });
-    const config = {
+    const response = await fetch("/signUpUser", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        method: 'POST'
-      }
-    }
-
-    const response = await fetch("/signUpUser", config, body);
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+        cpassword,
+      }),
+    });
 
     const data = await response;
 
