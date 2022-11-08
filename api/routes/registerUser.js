@@ -1,58 +1,69 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
+const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 const app = express();
 require("../db/connection");
 const { body, validationResult } = require('express-validator');
 
 const User = require('../models/User');
 
-router.get('/', (req, res) => {
-    res.send("Server is Responding.");
-})
 
+// @route    POST /registerUser
+// @desc     Register User
+// @access   Public
 router.post('/',
 
     body('name', 'Name is required').not().isEmpty(),
     body('email', 'Email should be valid').isEmail(),
     body('password', 'Password should be of minimum length 5.').isLength({ min: 5 }),
 
-async (req, res) => {
+    async (req, res) => {
 
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
-    }
-
-    console.log(req.body);
-    const { name, email, password, cpassword } = req.body;
-
-    if (!name || !email || !password || !cpassword) {
-        return res.status(422).json({ error: "complete the details" });
-    }
-
-    try {
-        const userExist = await User.findOne({ email: email });
-
-        if (userExist) {
-            return res.status(422).json({ error: "User already Exist." });
+        // Checking for validation errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
         }
-        else if (password != cpassword) {
-            return res.status(422).json({ error: "password not matching." });
-        }
-        else {
-            const user = new User({ name, email, password, cpassword });
+
+        const { name, email, password } = req.body;
+
+        try {
+            const userExist = await User.findOne({ email: email });
+
+            if (userExist) {
+                return res.status(422).json({ errors: [{ msg: "User already Exist." }] });
+            }
+
+            const user = new User({ name, email, password });
+
+            // Encrypt password using bcrypt
+            const salt = await bcryptjs.genSalt(12);           // To create a hashing
+            user.password = await bcryptjs.hash(password, salt);
 
             await user.save();
-            console.log("User Saved")
-            console.log(user);
-            return res.sendStatus(201).json({ message: "User Registered" });
+
+            // Return jsonwebtoken :- This is required because we want our user to be directly logged in when registered.
+            const payload = {
+                user: {
+                    id: user.id
+                }
+            }
+            jwt.sign(payload,
+                config.get('jwtSecret'),
+                { expiresIn: 36000000 },
+                (err, token) => {
+                    if (err) throw err;
+                    console.log(`${token} User Registered`);
+                    res.json({ token })
+                });
+
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send("Server Error");
         }
-    } catch (err) {
-        console.error(err.message);
-    }
-});
+    });
 
 
 module.exports = router;

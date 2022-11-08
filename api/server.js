@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const connectDB = require('./db/connection');
 const express = require('express');
 
@@ -18,8 +17,12 @@ app.get("/", (req, res) => {
 })
 
 // Define routes
-app.use('/signUpUser', require('./routes/registerUser'));;
+app.use('/signUpUser', require('./routes/registerUser'));
 app.use('/signUpCompany', require('./routes/registerCompany'));
+app.use('/userAuth', require('./routes/userAuth'));
+app.use('/companyAuth', require('./routes/companyAuth'));
+app.use('/posts', require('./routes/posts'));
+
 // app.use('/logInUser', require('./routes/logInUser'))
 // app.use('/api/profile', require('./routes/api/profile'));
 // app.use('/api/posts', require('./routes/api/posts'));

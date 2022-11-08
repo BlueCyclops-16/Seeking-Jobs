@@ -9,7 +9,7 @@ const CompanyPost = new mongoose.Schema({
         type: String,
         required: true
     },
-    name: {
+    companyname: {
         type: String
     },
     likes: [
