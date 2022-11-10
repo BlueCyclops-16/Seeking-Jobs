@@ -117,7 +117,7 @@ router.post('/user', [auth,
             if (userProfile) {
                 // Update
 
-                userProfile = await Profile.findOneAndUpdate(
+                userProfile = await UserProfile.findOneAndUpdate(
                     { user: req.user.id },
                     { $set: profileFields },
                     { new: true }
@@ -146,7 +146,6 @@ router.post('/user', [auth,
 // @desc     Create or update a user profile
 // @access   Private
 router.post('/company', [auth,
-    body('companyname', 'Company name is required').not().isEmpty(),
     body('website', 'Website name is required').not().isEmpty(),
     body('headquarters', 'Headquartersis required').not().isEmpty(),
     body('services', 'Services is required').not().isEmpty(),
@@ -176,7 +175,6 @@ router.post('/company', [auth,
         // Build profile Object
         const profileFields = {};
         profileFields.company = req.user.id;
-        profileFields.company = companyname;
         profileFields.website = website;
         profileFields.headquarters = headquarters;
         if (about) profileFields.about = about;
@@ -202,7 +200,6 @@ router.post('/company', [auth,
 
             if (companyProfile) {
                 // Update
-
                 companyProfile = await CompanyProfile.findOneAndUpdate(
                     { company: req.user.id },
                     { $set: profileFields },
@@ -321,7 +318,7 @@ router.delete('/user', auth, async (req, res) => {
     try {
 
         // Remove all posts of user
-        await UserPost.deleteMany({ user: req.user.id });
+        // await UserPost.deleteMany({ user: req.user.id });
         // Remove profile
         await UserProfile.findOneAndRemove({ user: req.user.id });
         // Remove user
@@ -348,7 +345,7 @@ router.delete('/company', auth, async (req, res) => {
     try {
 
         // Remove all posts of company
-        await CompanyPost.deleteMany({ company: req.user.id });
+        // await CompanyPost.deleteMany({ company: req.user.id });
         // Remove profile of company
         await CompanyProfile.findOneAndRemove({ company: req.user.id });
         // Remove company
@@ -384,7 +381,7 @@ router.put('/user/experience', [auth,
         return res.status(400).json({ errors: errors.array() });
     }
 
-    // Destruturing
+    // Destructuring
     const {
         title,
         company,

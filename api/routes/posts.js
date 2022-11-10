@@ -182,40 +182,40 @@ router.delete('/:id', auth, async (req, res) => {
 });
 
 
-// @route    PUT posts/like/:id
+// @route    PUT api/posts/like/:id
 // @desc     Like a post
 // @access   Private
-router.put('/like/:id', auth, async (req, res) => {
+// router.put('/like/:id', auth, async (req, res) => {
 
-    try {
-        const userPost = await UserPost.findById(req.params.id);
+//     try {
+//         const userPost = await UserPost.findById(req.params.id);
 
-        const companyPost = await CompanyPost.findById(req.params.id);
+//         const companyPost = await CompanyPost.findById(req.params.id);
 
-        // Check if the post is already liked by the user or company that is calling this route
-        if (!companyPost) {
-            if (userPost.likes.filter(like => (like.user.toString() === req.user.id || like.company.toString == req.user.id)).length > 0) {
-                return res.status(400).json({ msg: "Post is already liked." });
-            }
-        }
+//         // Check if the post is already liked by the user or company that is calling this route
+//         if (!companyPost) {
+//             if (userPost.likes.filter(like => (like.user.toString() === req.user.id || like.company.toString == req.user.id)).length > 0) {
+//                 return res.status(400).json({ msg: "Post is already liked." });
+//             }
+//         }
 
-         else {
-            if (companyPost.likes.filter(like => (like.user.toString() === req.user.id || like.company.toString == req.user.id)).length > 0) {
-                return res.status(400).json({ msg: "Post is already liked." });
-        }
-    }
+//          else {
+//             if (companyPost.likes.filter(like => (like.user.toString() === req.user.id || like.company.toString == req.user.id)).length > 0) {
+//                 return res.status(400).json({ msg: "Post is already liked." });
+//         }
+//     }
 
-        // post.likes.unshift({ user: req.user.id });
+//         // post.likes.unshift({ user: req.user.id });
 
-        await post.save();
+//         await post.save();
 
-        res.json(post.likes);
+//         res.json(post.likes);
 
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send("Server Error");
-    }
-})
+//     } catch (err) {
+//         console.error(err.message);
+//         res.status(500).send("Server Error");
+//     }
+// })
 
 
 

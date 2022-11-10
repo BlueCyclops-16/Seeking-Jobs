@@ -17,16 +17,14 @@ app.get("/", (req, res) => {
 })
 
 // Define routes
-app.use('/signUpUser', require('./routes/registerUser'));
-app.use('/signUpCompany', require('./routes/registerCompany'));
-app.use('/userAuth', require('./routes/userAuth'));
-app.use('/companyAuth', require('./routes/companyAuth'));
-app.use('/posts', require('./routes/posts'));
-app.use('/profile', require('./routes/profile'));
+app.use('/api/signUpUser', require('./routes/registerUser'));
+app.use('/api/signUpCompany', require('./routes/registerCompany'));
+app.use('/api/userAuth', require('./routes/userAuth'));
+app.use('/api/companyAuth', require('./routes/companyAuth'));
+app.use('/api/posts', require('./routes/posts'));
+app.use('/api/profile', require('./routes/profile'));
+app.use('/api/vacancy', require('./routes/vacancy'));
 
-// app.use('/logInUser', require('./routes/logInUser'))
-// app.use('/api/profile', require('./routes/api/profile'));
-// app.use('/api/posts', require('./routes/api/posts'));
 
 app.listen(PORT, () => {
     console.log(`Server running at port ${PORT}.`);
