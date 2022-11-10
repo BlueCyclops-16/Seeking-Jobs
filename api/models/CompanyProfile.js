@@ -3,21 +3,22 @@ const mongoose = require('mongoose');
 const CompanySchema = new mongoose.Schema({
     company: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'companies'
+        ref: 'company'
     },
     companyname: {
-        type: String
+        type: String,
+        required: true
     },
     website: {
         type: String,
         required: true
     },
     headquarters: {
-        type: String
+        type: String,
+        required: true
     },
     services: {
-        type: [String],
-        required: true
+        type: [String]
     },
     about: {
         type: String

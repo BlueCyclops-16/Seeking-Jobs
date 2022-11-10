@@ -22,6 +22,7 @@ app.use('/signUpCompany', require('./routes/registerCompany'));
 app.use('/userAuth', require('./routes/userAuth'));
 app.use('/companyAuth', require('./routes/companyAuth'));
 app.use('/posts', require('./routes/posts'));
+app.use('/profile', require('./routes/profile'));
 
 // app.use('/logInUser', require('./routes/logInUser'))
 // app.use('/api/profile', require('./routes/api/profile'));
