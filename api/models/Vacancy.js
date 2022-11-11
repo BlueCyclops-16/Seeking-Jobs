@@ -5,9 +5,6 @@ const Vacancy = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'companies'
     },
-    companyname: {
-        type: String,
-    },
     title: {
         type: String,
         required: true

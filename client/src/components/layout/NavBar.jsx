@@ -7,7 +7,7 @@ const Navbar = () => {
       <h1>
         <Link to="/">
           <i className="fas fa-code" />
-          DevConnector
+          Seeking Jobs
         </Link>
       </h1>
       <ul>
