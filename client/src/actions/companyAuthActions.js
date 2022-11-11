@@ -7,7 +7,7 @@ import { GET_ERRORS, SET_CURRENT_COMPANY } from './types';
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post('/api/routes/registerCompany', userData)
+    .post('/api/signUpCompany', userData)
     .then(res => history.push('/companyAuth'))
     .catch(err =>
       dispatch({
@@ -20,7 +20,7 @@ export const registerUser = (userData, history) => dispatch => {
 // Login - Get User Token
 export const loginUser = userData => dispatch => {
   axios
-    .post('/api/routes/comapnyAuth', userData)
+    .post('/api/comapnyAuth', userData)
     .then(res => {
       // Save to localStorage
       const { token } = res.data;

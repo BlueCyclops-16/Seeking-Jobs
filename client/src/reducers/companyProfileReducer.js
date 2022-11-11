@@ -10,7 +10,7 @@ import {
     loading: false
   };
   
-  export default function(state = initialState, action) {
+export default function companyProfileReducer(state = initialState, action) {
     switch (action.type) {
       case COMPANY_PROFILE_LOADING:
         return {

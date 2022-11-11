@@ -12,7 +12,7 @@ import {
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
   axios
-    .get('/api/routes/userProfile')
+    .get('/api/profile/user/me')
     .then(res =>
       dispatch({
         type: GET_USER_PROFILE,
@@ -30,7 +30,7 @@ export const getCurrentProfile = () => dispatch => {
 // Create Profile
 export const createProfile = (profileData, history) => dispatch => {
   axios
-    .post('/api/routes/userProfile', profileData)
+    .post('/api/profile/user', profileData)
     .then(res => history.push('/userDashboard'))
     .catch(err =>
       dispatch({
@@ -43,7 +43,7 @@ export const createProfile = (profileData, history) => dispatch => {
 // Add experience
 export const addExperience = (expData, history) => dispatch => {
   axios
-    .post('/api/routes/userProfile/experience', expData)
+    .post('/api/profile/user/experience', expData)
     .then(res => history.push('/userDashboard'))
     .catch(err =>
       dispatch({
@@ -56,7 +56,7 @@ export const addExperience = (expData, history) => dispatch => {
 // Add education
 export const addEducation = (eduData, history) => dispatch => {
   axios
-    .post('/api/routes/userProfile/education', eduData)
+    .post('/api/profile/user/education', eduData)
     .then(res => history.push('/userDashboard'))
     .catch(err =>
       dispatch({
@@ -69,7 +69,7 @@ export const addEducation = (eduData, history) => dispatch => {
 // Delete Experience
 export const deleteExperience = id => dispatch => {
   axios
-    .delete(`/api/routes/userProfile/experience/${id}`)
+    .delete(`/api/profile/user/experience/${id}`)
     .then(res =>
       dispatch({
         type: GET_USER_PROFILE,
@@ -87,7 +87,7 @@ export const deleteExperience = id => dispatch => {
 // Delete Education
 export const deleteEducation = id => dispatch => {
   axios
-    .delete(`/api/routes/userProfile/education/${id}`)
+    .delete(`/api/profile/user/education/${id}`)
     .then(res =>
       dispatch({
         type: GET_USER_PROFILE,
@@ -106,7 +106,7 @@ export const deleteEducation = id => dispatch => {
 export const deleteAccount = () => dispatch => {
   if (window.confirm('Are you sure? This can NOT be undone!')) {
     axios
-      .delete('/api/routes/userProfile')
+      .delete('/api/profile/user')
       .then(res =>
         dispatch({
           type: SET_CURRENT_USER,
