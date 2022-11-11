@@ -17,7 +17,13 @@ const UserPost = new mongoose.Schema({
         {
             user: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'users'
+                ref: 'users',
+                default: null
+            },
+            company: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'companies',
+                default: null
             }
         }
     ],
