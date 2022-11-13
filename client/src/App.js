@@ -1,9 +1,8 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-
-import { Provider } from 'react-redux';
+import { connect } from "react-redux";
 import store from './store';
 
 import SignUpUser from "./components/auth/SignUpUser";
@@ -12,35 +11,84 @@ import LogInCompany from "./components/auth/LogInCompany";
 import LogInUser from "./components/auth/LogInUser"
 import NavBar from "./components/layout/NavBar";
 import Home from "./components/layout/Home"
-import Footer from "./components/layout/Footer";
+import Alert from "./components/layout/Alert";
+import PrivateRoute from "./components/PrivateRouting/PrivateRoute";
+import UserDashboard from "./components/userDashboard/UserDashboard";
+import CompanyDashboard from "./components/companyDashboard/CompanyDashboard";
+
+// Redux
+import { loadUser } from "./actions/userAuthActions";
+import setAuthToken from "./utils/setAuthToken";
+import PropTypes from 'prop-types';
 
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
-function App(props) {
+
+const App = ({ userAuth: { isAuthenticated: userAuthenticated, loading: userLoading }, companyAuth: { isAuthenticated: companyAuthenticated, loading: companyLoading } }) => {
+
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
   return (
-    <Provider store={store}>
-      <div>
+    <Router>
+        <NavBar />
+        <section className="container">
+          <Alert />
+        </section>
 
-        <Router>
-          <Fragment>
-            <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
 
+          <Route path="/signUpUser" element={<section className="container"><SignUpUser />{" "}</section>} />
 
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/signUpUser" element={<section className="container"><SignUpUser /></section>} />
-              <Route path="/logInUser" element={<section className="container"><LogInUser /></section>} />
-              <Route path="/signUpCompany" element={<section className="container"><SignUpCompany /></section>} />
-              <Route path="/logInCompany" element={<section className="container"><LogInCompany /></section>} />
-            </Routes>
+          <Route path="/logInUser" element={<section className="container"><LogInUser />{" "}</section>} />
 
-            <Footer />
-          </Fragment>
-        </Router>
+          <Route path="/signUpCompany" element={<section className="container"><SignUpCompany />{" "}</section>} />
 
+          <Route path="/logInCompany" element={<section className="container"><LogInCompany />{" "}</section>} />
 
-      </div>
-    </Provider>
+          <Route
+            path="/userdashboard"
+            element={
+              <section className="container">
+                <PrivateRoute isAuthenticated={userAuthenticated} loading={userLoading}>
+                  <UserDashboard />
+                </PrivateRoute>
+              </section>
+            }
+          />
+
+          <Route
+            path="/companydashboard"
+            element={
+              <section className="container">
+                <PrivateRoute isAuthenticated={companyAuthenticated} loading={companyLoading}>
+                  <CompanyDashboard />
+                </PrivateRoute>
+              </section>
+            }
+          />
+        </Routes>
+
+    </Router>
+
   )
 }
-export default App;
+
+App.propTypes = {
+  userAuth: PropTypes.object.isRequired,
+  companyAuth: PropTypes.object.isRequired
+}
+
+
+const mapStateToProps = (state) => ({
+  userAuth: state.userAuthReducer,
+  companyAuth: state.companyAuthReducer
+})
+
+
+export default connect(mapStateToProps)(App);

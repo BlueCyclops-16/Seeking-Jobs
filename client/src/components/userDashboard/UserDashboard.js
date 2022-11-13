@@ -10,7 +10,7 @@ import Education from "./Education";
 
 import { deleteAccount } from "../../actions/userProfileAction";
 
-const Dashboard = ({
+const UserDashboard = ({
   getCurrentProfile,
   auth: { user },
   profile: { profile, loading },
@@ -54,7 +54,7 @@ const Dashboard = ({
   );
 };
 
-Dashboard.propTypes = {
+UserDashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
@@ -62,8 +62,21 @@ Dashboard.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
-  profile: state.profile,
+  auth: state.userAuthReducer,
+  profile: state.userProfileReducer,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(Dashboard);
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(UserDashboard);
+
+
+// import React from 'react'
+
+
+// const UserDashboard = () => {
+//   return (
+//     <div>UserDashboard</div>
+//   )
+// }
+
+
+// export default UserDashboard;

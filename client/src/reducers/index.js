@@ -4,6 +4,7 @@ import errorReducer from './errorReducer';
 import userAuthReducer from './userAuthReducer';
 import userProfileReducer from './userProfileReducer';
 import companyProfileReducer from './companyProfileReducer';
+import alert from './alert';
 
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
   companyAuthReducer,
   errorReducer,
   userProfileReducer,
-  companyProfileReducer
+  companyProfileReducer,
+  alert
 });

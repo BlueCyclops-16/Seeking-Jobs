@@ -1,10 +1,11 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { loginCompany } from "../../actions/companyAuthActions";
 
-const LogInCompany = () => {
-  const navigate = useNavigate();
-
+const LogInCompany = ({ loginCompany, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,30 +20,13 @@ const LogInCompany = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        method: "POST",
-      },
-    };
-    const body = JSON.stringify({
-      email,
-      password,
-    });
-
-    const response = await fetch("/logInCompany", config, body);
-
-    const data = await response;
-
-    if (response.status === 421 || !data) {
-      window.alert("Invalid Request");
-      console.log("Invalid Request");
-    } else {
-      window.alert("Successfully loged in");
-      console.log("Successfully loged in");
-      navigate("/");
-    }
+    loginCompany(email, password);
   };
+
+  if (isAuthenticated) {
+    return <Navigate to="/companydashboard" />;
+  }
+
   return (
     <Fragment>
       <h1 className="large text-primary">Sign In</h1>
@@ -74,7 +58,11 @@ const LogInCompany = () => {
           />
         </div>
 
-        <input type="submit" className="btn btn-primary" value="Login" />
+        <input
+          type="submit"
+          className="btn btn-primary"
+          value="Login Company"
+        />
       </form>
       <p className="my-1">
         Don't have an company account?{" "}
@@ -84,4 +72,13 @@ const LogInCompany = () => {
   );
 };
 
-export default LogInCompany;
+LogInCompany.propTypes = {
+  loginCompany: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.companyAuthReducer.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { loginCompany })(LogInCompany);

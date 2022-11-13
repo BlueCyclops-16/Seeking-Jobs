@@ -1,9 +1,10 @@
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { loginUser } from "../../actions/userAuthActions";
 
-const LogInUser = () => {
-  const navigate = useNavigate();
+const LogInUser = ({loginUser, isAuthenticated}) => {
 
   const [formData, setFormData] = useState({
     email: "",
@@ -19,30 +20,13 @@ const LogInUser = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        method: "POST",
-      },
-    };
-    const body = JSON.stringify({
-      email,
-      password,
-    });
-
-    const response = await fetch("/logInUser", config, body);
-
-    const data = await response;
-
-    if (response.status === 421 || !data) {
-      window.alert("Invalid Request");
-      console.log("Invalid Request");
-    } else {
-      window.alert("Successfully loged in");
-      console.log("Successfully loged in");
-      navigate("/");
-    }
+    loginUser(email, password);
   };
+
+  // Navigate to dashboard if user is logged in
+  if(isAuthenticated) {
+    return <Navigate to='/userdashboard' />
+  }
 
   return (
     <Fragment>
@@ -84,4 +68,13 @@ const LogInUser = () => {
   );
 };
 
-export default LogInUser;
+LogInUser.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+}
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.userAuthReducer.isAuthenticated
+})
+
+export default connect(mapStateToProps, {loginUser})(LogInUser);

@@ -1,13 +1,13 @@
 import React, { Fragment } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { registerUser } from "../../actions/userAuthActions";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import "./style.css";
 
-function SignUpUser() {
-
-  const navigate = useNavigate();
+export const SignUpUser = ({ registerUser, isAuthenticated }) => {
 
   const [userData, setUser] = useState({
     name: "",
@@ -19,42 +19,26 @@ function SignUpUser() {
   const { name, email, password, cpassword } = userData;
 
   const handleInputs = (event) => {
-    console.log(event);
-    var field = event.target.name;
-    var val = event.target.value;
-    setUser({ ...userData, [field]: val });
+
+    setUser({ ...userData, [event.target.name]: event.target.value });
   };
 
-  const sendData = async (event) => {
+  const onSubmit = async event => {
     event.preventDefault();
 
+    if(password !== cpassword) {
+      
+      // I ahve to create alert action first.
 
-    const response = await fetch("/signUpUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-        cpassword,
-      }),
-    });
-
-    const data = await response;
-
-    console.log(data);
-
-    if (response.status === 422 || !data) {
-      window.alert("Invalid Request");
-      console.log("Invalid Request");
+      // await setAlert("Passwords don't match.", 'danger');
     } else {
-      window.alert("Successfully Registered");
-      console.log("Successfully Registered");
-      navigate("/logInUser");
+      registerUser({name, email, password});
     }
-  };
+  }
+
+  if(isAuthenticated) {
+    return <Navigate to='/userdashboard' />
+  }
 
   return (
     <Fragment>
@@ -63,7 +47,7 @@ function SignUpUser() {
         <i className="fas fa-user"></i> Create Your Account
       </p>
 
-      <form className="form" onSubmit={(e) => sendData(e)}>
+      <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
           <input
             type="text"
@@ -115,4 +99,14 @@ function SignUpUser() {
   );
 }
 
-export default SignUpUser;
+SignUpUser.propTypes = {
+  // setAlert : PropTypes.func.isRequired
+  registerUser: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+}
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.userAuthReducer.isAuthenticated
+})
+
+export default connect(mapStateToProps, {registerUser})(SignUpUser);

@@ -1,10 +1,13 @@
 import React, { Fragment } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { setAlert } from "../../actions/alert";
+import { registerCompany } from "../../actions/companyAuthActions";
 
-function SignUpCompany() {
-  const navigate = useNavigate();
+const SignUpCompany = ({setAlert, registerCompany, isAuthenticated }) => {
 
   const [companyData, setCompany] = useState({
     companyname: "",
@@ -16,42 +19,22 @@ function SignUpCompany() {
   const { companyname, email, password, cpassword } = companyData;
 
   const handleInputs = (event) => {
-    console.log(event);
-    var field = event.target.name;
-    var val = event.target.value;
-    setCompany({ ...companyData, [field]: val });
+    setCompany({ ...companyData, [event.target.name]: event.target.value });
   };
 
   const sendData = async (event) => {
     event.preventDefault();
 
-    const response = await fetch("/signUpUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        companyname,
-        email,
-        password,
-        cpassword,
-      }),
-    });
-
-    const data = await response;
-
-    console.log(data);
-
-    if (response.status === 422 || !data) {
-      window.alert("Invalid Request");
-      console.log("Invalid Request");
+    if(password !== cpassword) {
+      await setAlert("Passwords don't match.", 'danger')
     } else {
-      window.alert("Successfully Registered");
-      console.log("Successfully Registered");
-      navigate("/logInCompany");
+      registerCompany({ companyname, email, password });
     }
   };
 
+  if(isAuthenticated) {
+    return <Navigate to='/companydashboard' />
+  }
 
   return (
     <Fragment>
@@ -112,4 +95,14 @@ function SignUpCompany() {
   );
 }
 
-export default SignUpCompany;
+SignUpCompany.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  registerCompany: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+}
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.companyAuthReducer.isAuthenticated
+})
+
+export default connect(mapStateToProps, {setAlert, registerCompany})(SignUpCompany);
