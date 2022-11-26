@@ -47,8 +47,8 @@ const SignUpCompany = ({setAlert, registerCompany, isAuthenticated }) => {
         <div className="form-group">
           <input
             type="text"
-            placeholder="Name"
-            name="name"
+            placeholder="Company Name"
+            name="companyname"
             value={companyname}
             onChange={(e) => handleInputs(e)}
             required

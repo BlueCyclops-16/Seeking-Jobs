@@ -3,24 +3,24 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ProfileActions from "./ProfileActions";
-import { getCurrentProfile } from "../../actions/userProfileAction";
 import Spinner from "../layout/Spinner";
 import Experience from "./Experience";
 import Education from "./Education";
 
-import { deleteAccount } from "../../actions/userProfileAction";
+import { getCurrentProfile, deleteUserAccount } from "../../actions/userProfileAction";
 
 const UserDashboard = ({
   getCurrentProfile,
-  auth: { user },
-  profile: { profile, loading },
-  deleteAccount
+  userAuth: { user },
+  userProfile: { userProfile, loading },
+  deleteUserAccount
 }) => {
+  
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
 
-  return loading && profile === null ? (
+  return loading && userProfile === null ? (
     <Spinner />
   ) : (
     <Fragment>
@@ -29,14 +29,14 @@ const UserDashboard = ({
         <i className="fas fa-user">Welcome {user && user.name}</i>
       </p>
 
-      {profile !== null ? (
+      {userProfile !== null ? (
         <Fragment>
           <ProfileActions />
-          <Experience experience={profile.experience} />
-          <Education education={profile.education} />
+          <Experience experience={userProfile.experience} />
+          <Education education={userProfile.education} />
 
           <div className="my-2">
-            <button className="btn btn-danger" onClick={deleteAccount}>
+            <button className="btn btn-danger" onClick={deleteUserAccount}>
               <i className="fas fa-user-minus" />
               Delete My Account
             </button>
@@ -56,27 +56,14 @@ const UserDashboard = ({
 
 UserDashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
-  deleteAccount: PropTypes.func.isRequired
+  userAuth: PropTypes.object.isRequired,
+  userProfile: PropTypes.object.isRequired,
+  deleteUserAccount: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.userAuthReducer,
-  profile: state.userProfileReducer,
+  userAuth: state.userAuthReducer,
+  userProfile: state.userProfileReducer,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(UserDashboard);
-
-
-// import React from 'react'
-
-
-// const UserDashboard = () => {
-//   return (
-//     <div>UserDashboard</div>
-//   )
-// }
-
-
-// export default UserDashboard;
+export default connect(mapStateToProps, { getCurrentProfile, deleteUserAccount })(UserDashboard);
