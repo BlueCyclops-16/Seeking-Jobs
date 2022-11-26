@@ -11,7 +11,7 @@ const Company = require("../models/Company");
 // @desc     Register Company
 // @access   Public
 router.post("/",
-    body("companyname", "Name is required").not().isEmpty(),
+    body("companyname", "Company Name is required").not().isEmpty(),
     body("email", "Email should be valid").isEmail(),
     body("password", "Password should be of minimum length 5.").isLength({
         min: 5,

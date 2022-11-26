@@ -28,7 +28,7 @@ export const loadCompany = () => async dispatch => {
 
 // Register
 export const registerCompany =
-  ({ name, email, password }) =>
+  ({ companyname, email, password }) =>
     async (dispatch) => {
       const config = {
         headers: {
@@ -36,7 +36,7 @@ export const registerCompany =
         },
       };
 
-      const body = JSON.stringify({ name, email, password });
+      const body = JSON.stringify({ companyname, email, password });
 
       try {
         const res = await axios.post("/api/signUpCompany", body, config);
