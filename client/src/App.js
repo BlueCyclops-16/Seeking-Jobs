@@ -27,7 +27,10 @@ import { loadUser } from "./actions/userAuthActions";
 import setAuthToken from "./utils/setAuthToken";
 import PropTypes from 'prop-types';
 import CreateUserProfile from "./components/create-user-profile/CreateUserProfile";
+import CreateCompanyProfile from "./components/create-company-profile/CreateCompanyProfile";
+
 import EditUserProfile from "./components/edit-user-profile/EditUserProfile";
+import EditCompanyProfile from "./components/edit-company-profile/EditCompanyProfile";
 
 
 if (localStorage.token) {
@@ -90,11 +93,22 @@ const App = ({ userAuth: { isAuthenticated: userAuthenticated, loading: userLoad
         />
 
         <Route
-          path="/create-profile"
+          path="/create-user-profile"
           element={
             <section className="container">
               <PrivateRoute isAuthenticated={userAuthenticated} loading={userLoading}>
                 <CreateUserProfile />
+              </PrivateRoute>
+            </section>
+          }
+        />
+
+          <Route
+          path="/create-company-profile"
+          element={
+            <section className="container">
+              <PrivateRoute isAuthenticated={companyAuthenticated} loading={companyLoading}>
+                <CreateCompanyProfile />
               </PrivateRoute>
             </section>
           }
@@ -106,6 +120,17 @@ const App = ({ userAuth: { isAuthenticated: userAuthenticated, loading: userLoad
             <section className="container">
               <PrivateRoute isAuthenticated={userAuthenticated} loading={userLoading}>
                 <EditUserProfile />
+              </PrivateRoute>
+            </section>
+          }
+        />
+
+        <Route
+          path="/edit-company-profile"
+          element={
+            <section className="container">
+              <PrivateRoute isAuthenticated={companyAuthenticated} loading={companyLoading}>
+                <EditCompanyProfile />
               </PrivateRoute>
             </section>
           }

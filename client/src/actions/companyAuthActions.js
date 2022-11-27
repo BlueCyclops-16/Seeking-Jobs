@@ -1,7 +1,14 @@
 import axios from "axios";
 import { setAlert } from './alert';
-// import { REGISTER_SUCCESS, REGISTER_FAIL, AUTH_ERROR, USER_LOADED, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, CLEAR_PROFILE } from "./types";
-import { COMPANY_REGISTER_SUCCESS, COMPANY_REGISTER_FAIL, COMPANY_AUTH_ERROR, COMPANY_LOADED, COMPANY_LOGIN_FAIL, COMPANY_LOGIN_SUCCESS, COMPANY_LOGOUT, CLEAR_COMPANY_PROFILE } from "./types";
+import { COMPANY_REGISTER_SUCCESS, 
+  COMPANY_REGISTER_FAIL, 
+  COMPANY_AUTH_ERROR, 
+  COMPANY_LOADED, 
+  COMPANY_LOGIN_FAIL, 
+  COMPANY_LOGIN_SUCCESS, 
+  COMPANY_LOGOUT, 
+  CLEAR_COMPANY_PROFILE } 
+  from "./types";
 import setAuthToken from '../utils/setAuthToken';
 
 // Load User
@@ -64,7 +71,7 @@ export const registerCompany =
 
 
 
-// Log In User
+// Log In Company
 export const loginCompany =
   (email, password) =>
     async (dispatch) => {

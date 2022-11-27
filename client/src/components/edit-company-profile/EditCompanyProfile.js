@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
@@ -21,7 +22,7 @@ function withRouter(Component) {
 
 
 const EditCompanyProfile = ({
-  profile: { profile, loading },
+  profile: { companyProfile, loading },
   createProfile,
   getCurrentProfile,
   history,
@@ -45,16 +46,16 @@ const EditCompanyProfile = ({
     getCurrentProfile();
 
     setFormData({
-      companyname: loading || !profile.companyname ? "" : profile.companyname,
-      website: loading || !profile.website ? "" : profile.website,
-      headquarters: loading || !profile.headquarters ? "" : profile.headquarters,
-      services: loading || !profile.services ? "" : profile.services,
-      about: loading || !profile.about ? "" : profile.about,
-      twitter: loading || !profile.social ? "" : profile.social.twitter,
-      facebook: loading || !profile.social ? "" : profile.social.facebook,
-      linkedin: loading || !profile.social ? "" : profile.social.linkedin,
-      youtube: loading || !profile.social ? "" : profile.social.youtube,
-      instagram: loading || !profile.social ? "" : profile.social.instagram,
+      companyname: loading || !companyProfile.companyname ? "" : companyProfile.companyname,
+      website: loading || !companyProfile.website ? "" : companyProfile.website,
+      headquarters: loading || !companyProfile.headquarters ? "" : companyProfile.headquarters,
+      services: loading || !companyProfile.services ? "" : companyProfile.services,
+      about: loading || !companyProfile.about ? "" : companyProfile.about,
+      twitter: loading || !companyProfile.social ? "" : companyProfile.social.twitter,
+      facebook: loading || !companyProfile.social ? "" : companyProfile.social.facebook,
+      linkedin: loading || !companyProfile.social ? "" : companyProfile.social.linkedin,
+      youtube: loading || !companyProfile.social ? "" : companyProfile.social.youtube,
+      instagram: loading || !companyProfile.social ? "" : companyProfile.social.instagram,
     });
   }, [loading, getCurrentProfile]);
 
@@ -227,7 +228,7 @@ EditCompanyProfile.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  profile: state.profile,
+  profile: state.companyProfileReducer,
 });
 
 export default connect(mapStateToProps, {

@@ -4,10 +4,11 @@ import { Link, Navigate } from "react-router-dom";
 import { registerUser } from "../../actions/userAuthActions";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { setAlert } from "../../actions/alert";
 
 import "./style.css";
 
-export const SignUpUser = ({ registerUser, isAuthenticated }) => {
+const SignUpUser = ({ setAlert,registerUser, isAuthenticated }) => {
 
   const [userData, setUser] = useState({
     name: "",
@@ -27,10 +28,7 @@ export const SignUpUser = ({ registerUser, isAuthenticated }) => {
     event.preventDefault();
 
     if(password !== cpassword) {
-      
-      // I ahve to create alert action first.
-
-      // await setAlert("Passwords don't match.", 'danger');
+       await setAlert("Passwords don't match.", 'danger');
     } else {
       registerUser({name, email, password});
     }
@@ -100,7 +98,7 @@ export const SignUpUser = ({ registerUser, isAuthenticated }) => {
 }
 
 SignUpUser.propTypes = {
-  // setAlert : PropTypes.func.isRequired
+  setAlert : PropTypes.func.isRequired,
   registerUser: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 }
@@ -109,4 +107,4 @@ const mapStateToProps = state => ({
   isAuthenticated: state.userAuthReducer.isAuthenticated
 })
 
-export default connect(mapStateToProps, {registerUser})(SignUpUser);
+export default connect(mapStateToProps, {setAlert, registerUser})(SignUpUser);

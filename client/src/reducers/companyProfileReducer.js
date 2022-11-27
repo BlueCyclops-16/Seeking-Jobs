@@ -1,9 +1,9 @@
 import {
     GET_COMPANY_PROFILE,
-    COMPANY_PROFILE_LOADING,
-    CLEAR_CURRENT_COMPANY_PROFILE,
     GET_COMPANY_PROFILES,
-    COMPANY_PROFILE_ERROR
+    COMPANY_PROFILE_ERROR,
+    CLEAR_COMPANY_PROFILE,
+    UPDATE_COMPANY_PROFILE
   } from '../actions/types';
   
   const initialState = {
@@ -18,17 +18,14 @@ export default function companyProfileReducer(state = initialState, action) {
   const { type, payload } = action;
 
     switch (type) {
-      case COMPANY_PROFILE_LOADING:
-        return {
-          ...state,
-          loading: true
-        };
+    
         case GET_COMPANY_PROFILES:
       return {
         ...state,
         companyProfiles: payload,
         loading: false
       }
+      case UPDATE_COMPANY_PROFILE:
       case GET_COMPANY_PROFILE:
         return {
           ...state,
@@ -36,12 +33,14 @@ export default function companyProfileReducer(state = initialState, action) {
           loading: false
         };
 
-      case CLEAR_CURRENT_COMPANY_PROFILE:
-        return {
-          ...state,
-          companyProfile: null
-        };
-
+      
+        case CLEAR_COMPANY_PROFILE:
+          return {
+            ...state,
+            companyProfile: null,
+            loading: false
+          }      
+    
         case COMPANY_PROFILE_ERROR:
           return {
             ...state,

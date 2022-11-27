@@ -10,7 +10,8 @@ import {
   GET_USER_PROFILES,
   GET_COMPANY_PROFILES,
   GET_COMPANY_PROFILE,
-  COMPANY_PROFILE_ERROR
+  COMPANY_PROFILE_ERROR,
+  CLEAR_COMPANY_PROFILE
 } from "./types";
 
 // Get current user profile
@@ -53,9 +54,9 @@ export const getUserProfiles = () => async (dispatch) => {
 
 // Get all company profiles
 export const getCompanyProfiles = () => async (dispatch) => {
-  // dispatch({
-  //   type: CLEAR_USER_PROFILE,
-  // });
+  dispatch({
+    type: CLEAR_COMPANY_PROFILE,
+  });
 
   try {
     const res = await axios.get("/api/profile/company");

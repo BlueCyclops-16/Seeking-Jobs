@@ -6,33 +6,33 @@ import ProfileActions from "./ProfileActions";
 import { getCurrentProfile } from "../../actions/companyProfileAction";
 import Spinner from "../layout/Spinner";
 
-import { deleteAccount } from "../../actions/companyProfileAction";
+import { deleteCompanyAccount } from "../../actions/companyProfileAction";
 
 const CompanyDashboard = ({
   getCurrentProfile,
-  auth: { user },
-  profile: { profile, loading },
-  deleteAccount
+  companyAuth: { company },
+  companyProfile: { companyProfile, loading },
+  deleteCompanyAccount
 }) => {
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
 
-  return loading && profile === null ? (
+  return loading && companyProfile === null ? (
     <Spinner />
   ) : (
     <Fragment>
       <h1 className="large text-primary">Dashboard</h1>
       <p className="lead">
-        <i className="fas fa-user">Welcome {user && user.name}</i>
+        <i className="fas fa-user">Welcome {company && company.companyname}</i>
       </p>
 
-      {profile !== null ? (
+      {companyProfile !== null ? (
         <Fragment>
           <ProfileActions />
 
           <div className="my-2">
-            <button className="btn btn-danger" onClick={deleteAccount}>
+            <button className="btn btn-danger" onClick={deleteCompanyAccount}>
               <i className="fas fa-user-minus" />
               Delete My Account
             </button>
@@ -41,7 +41,7 @@ const CompanyDashboard = ({
       ) : (
         <Fragment>
           <p>You have not yet setup a profile, please add some info.</p>
-          <Link to="/create-profile" className="btn btn-primary my-1">
+          <Link to="/create-company-profile" className="btn btn-primary my-1">
             Create Profile
           </Link>
         </Fragment>
@@ -52,16 +52,16 @@ const CompanyDashboard = ({
 
 CompanyDashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
-  deleteAccount: PropTypes.func.isRequired
+  companyAuth: PropTypes.object.isRequired,
+  companyProfile: PropTypes.object.isRequired,
+  deleteCompanyAccount: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.companyAuthReducer,
-  profile: state.companyProfileReducer,
+  companyAuth: state.companyAuthReducer,
+  companyProfile: state.companyProfileReducer,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(CompanyDashboard);
+export default connect(mapStateToProps, { getCurrentProfile, deleteCompanyAccount })(CompanyDashboard);
 
 

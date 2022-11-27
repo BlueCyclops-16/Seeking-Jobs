@@ -1,7 +1,14 @@
 import axios from "axios";
 import { setAlert } from './alert';
-// import { REGISTER_SUCCESS, REGISTER_FAIL, AUTH_ERROR, USER_LOADED, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, CLEAR_PROFILE } from "./types";
-import { USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_AUTH_ERROR, USER_LOADED, USER_LOGIN_FAIL, USER_LOGIN_SUCCESS, USER_LOGOUT, CLEAR_USER_PROFILE } from "./types";
+import { USER_REGISTER_SUCCESS, 
+          USER_REGISTER_FAIL, 
+            USER_AUTH_ERROR, 
+            USER_LOADED, 
+            USER_LOGIN_FAIL, 
+            USER_LOGIN_SUCCESS, 
+            USER_LOGOUT, 
+            CLEAR_USER_PROFILE } 
+          from "./types";
 import setAuthToken from '../utils/setAuthToken';
 
 // Load User

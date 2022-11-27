@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setAlert } from "../../actions/alert";
 import { registerCompany } from "../../actions/companyAuthActions";
+import "./style.css";
 
 const SignUpCompany = ({setAlert, registerCompany, isAuthenticated }) => {
 

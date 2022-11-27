@@ -26,11 +26,11 @@ const Navbar = ({
 
         <Link to="/userdashboard">
           {/* <i className="fas fa-user" /> */}
-          <span className="hide-sm">Dashboard</span>
+          <span className="hide-sm">User Dashboard</span>
         </Link>
       </li>
       <li>
-        <a onClick={logoutUser} href="#!">
+        <a onClick={logoutUser} href="/">
           <i className="fas fa-sign-out-alt" />{" "}
           <span className="hide-sm">Logout</span>
         </a>
@@ -49,11 +49,11 @@ const Navbar = ({
       <li>
         <Link to="/companydashboard">
           {/* <i className="fas fa-user" /> */}
-          <span className="hide-sm">Dashboard</span>
+          <span className="hide-sm">Company Dashboard</span>
         </Link>
       </li>
       <li>
-        <a onClick={logoutCompany} href="#!">
+        <a onClick={logoutCompany} href="/">
           {/* <i className="fas fa-sign-out-alt" />{" "} */}
           <span className="hide-sm">Logout</span>
         </a>

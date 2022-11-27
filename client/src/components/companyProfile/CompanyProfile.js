@@ -22,7 +22,9 @@ const CompanyProfile = ({getCompanyById, profile: { companyProfile, loading} ,au
              <Link to= '/companyProfiles' className='btn btn-light'>
                 Back to company Profiles
              </Link>
-             {auth.isAuthenticated && auth.loading===false && auth.user._id===companyProfile.user._id && (<Link to='edit-company-profile' className='btn btn-dark'>
+             {/* {console.log(companyProfile)}
+             {console.log(auth)} */}
+             {auth.isAuthenticated && auth.loading===false && auth.user._id===companyProfile.company._id && (<Link to='edit-company-profile' className='btn btn-dark'>
                 Edit Profile
              </Link>
              )}
