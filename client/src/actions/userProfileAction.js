@@ -53,9 +53,9 @@ export const getUserProfiles = () => async (dispatch) => {
 
 // Get all company profiles
 export const getCompanyProfiles = () => async (dispatch) => {
-  dispatch({
-    type: CLEAR_USER_PROFILE,
-  });
+  // dispatch({
+  //   type: CLEAR_USER_PROFILE,
+  // });
 
   try {
     const res = await axios.get("/api/profile/company");

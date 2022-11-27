@@ -1,10 +1,148 @@
-// import React, { Component } from 'react';
-// import { Link, withRouter } from 'react-router-dom';
-// import TextFieldGroup from '../common/TextFieldGroup';
-// import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
-// import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-// import { addExperience } from '../../actions/userProfileAction';
+import React, { Fragment , useState } from 'react';
+import {Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { addUserExperience } from '../../actions/userProfileAction';
+
+
+
+const AddExperience = ({addUserExperience, history}) =>{
+  const [ formData , setFormData ] = useState({
+
+      company: '',
+      title: '',
+      location: '',
+      from: '',
+      to: '',
+      current: false,
+      description: ''
+  });
+  
+  const [toDateDisabled, toggleDisabled] =useState(false);
+
+  const { company, title, location, from, to, current, description} = formData;
+
+  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
+  return (
+    <Fragment>
+
+               <h1 className="large text-primary">Add Experience</h1>
+               <p className="lead">
+                 Add any job or position that you have had in the past or current
+               </p>
+               <small>* = required fields</small>
+               <form  className= 'form'
+               onSubmit={e=>{
+                e.preventDefault();
+                addUserExperience(formData,history);
+              }}>
+                 
+
+                 <div className= "form-group">
+                 <input
+                  placeholder="* Company"
+                  name="company"
+                  value={company}
+                  onChange={e=>onChange(e)}
+                />
+                </div>
+
+                 <div className= "form-group">
+                <input
+                  placeholder="* Job Title"
+                  name="title"
+                  value={title}
+                  onChange={e=>onChange(e)}
+                />
+                </div>
+
+                <div className= "form-group">
+                <input
+                  placeholder="Location"
+                  name="location"
+                  value={location}
+                  onChange={e=>onChange(e)}
+                />
+                </div>
+
+                <div className= "form-group">
+                <h6>From Date</h6>
+                <input
+                  name="from"
+                  type="date"
+                  value={from}
+                  onChange={e=>onChange(e)}
+                />
+                </div>
+
+                <div className="form-group">
+                  <p>
+                  <input
+                    type="checkbox"
+                    name="current"
+                    checked={current}
+                    value={current}
+                    onChange={e=>{
+                      setFormData({...formData, current: !current});
+                      toggleDisabled(!toDateDisabled);
+                    }}
+                  />{' '}Current job </p>
+                </div>
+                
+
+                <div className= "form-group">
+                <h6>To Date</h6>
+                <input
+                  name="to"
+                  type="date"
+                  value={to}
+                  onChange={e=>onChange(e)}
+                  disabled={toDateDisabled ? 'disabled' : ''}
+                />
+                </div>
+
+
+                <div className= "form-group">
+                <textarea
+                  placeholder="Job Description"
+                  name="description"
+                  value={description}
+                  onChange={e=>onChange(e)}
+                  info="Tell us about the the position"
+                ></textarea>
+                </div>
+
+                <input
+                  type="submit"
+                  value="Submit"
+                  className="btn btn-primary my-1"
+                />
+               
+               <Link to="/userdashboard" className="btn btn-light my-1">
+                Go Back
+               </Link>
+  
+
+              </form>
+    </Fragment>
+  )
+}
+
+
+
+
+AddExperience.propTypes = {
+  addUserExperience: PropTypes.func.isRequired
+};
+
+export default connect(null, { addUserExperience })(AddExperience);
+
+
+
+
+
+
+
 
 // class AddExperience extends Component {
 //   constructor(props) {
@@ -164,13 +302,3 @@
 // export default connect(mapStateToProps, { addExperience })(
 //   withRouter(AddExperience)
 // );
-
-
-import React from 'react'
-
-const AddExperience = () => {
-  return (
-    <div>AddExperience</div>
-  )
-}
-export default AddExperience;

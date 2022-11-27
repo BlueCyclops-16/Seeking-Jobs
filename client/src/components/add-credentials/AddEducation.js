@@ -1,3 +1,160 @@
+import React, { Fragment , useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { addUserEducation } from '../../actions/userProfileAction';
+
+
+
+const AddEducation = ({addUserEducation, history}) =>{
+  const [ formData , setFormData ] = useState({
+
+      school: '',
+      degree: '',
+      fieldofstudy: '',
+      from: '',
+      to: '',
+      current: false,
+      description: ''
+  });
+  
+  const [toDateDisabled, toggleDisabled] =useState(false);
+
+  const { school, degree, fieldofstudy, from, to, current, description} = formData;
+
+  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
+  return (
+    <Fragment>
+
+               <h1 className="large text-primary">Add Education</h1>
+               <p className="lead">
+                Add any school, bootcamp, etc that you have attended
+               </p>
+               <small>* = required fields</small>
+               <form  className= 'form'
+               onSubmit={e=>{
+                e.preventDefault();
+                addUserEducation(formData,history);
+              }}>
+                 
+
+                 <div className= "form-group">
+                 <input
+                  placeholder="* school"
+                  name="school"
+                  value={school}
+                  onChange={e=>onChange(e)}
+                />
+                </div>
+
+                 <div className= "form-group">
+                <input
+                  placeholder="* Degree"
+                  name="degree"
+                  value={degree}
+                  onChange={e=>onChange(e)}
+                />
+                </div>
+
+                <div className= "form-group">
+                <input
+                  placeholder="Field Of Study"
+                  name="fieldofstudy"
+                  value={fieldofstudy}
+                  onChange={e=>onChange(e)}
+                />
+                </div>
+
+                <div className= "form-group">
+                <h6>From Date</h6>
+                <input
+                  name="from"
+                  type="date"
+                  value={from}
+                  onChange={e=>onChange(e)}
+                />
+                </div>
+
+                <div className="form-group">
+                  <p>
+                  <input
+                    type="checkbox"
+                    name="current"
+                    checked={current}
+                    value={current}
+                    onChange={e=>{
+                      setFormData({...formData, current: !current});
+                      toggleDisabled(!toDateDisabled);
+                    }}
+                  />{' '}Current school </p>
+                </div>
+                
+
+                <div className= "form-group">
+                <h6>To Date</h6>
+                <input
+                  name="to"
+                  type="date"
+                  value={to}
+                  onChange={e=>onChange(e)}
+                  disabled={toDateDisabled ? 'disabled' : ''}
+                />
+                </div>
+
+
+                <div className= "form-group">
+                <textarea
+                  placeholder="Program Description"
+                  name="description"
+                  value={description}
+                  onChange={e=>onChange(e)}
+                  info="Tell us about the the program"
+                ></textarea>
+                </div>
+
+                <input
+                  type="submit"
+                  value="Submit"
+                  className="btn btn-primary my-1"
+                />
+               
+               <Link to="/userdashboard" className="btn btn-light my-1">
+                Go Back
+               </Link>
+  
+
+              </form>
+    </Fragment>
+  )
+}
+
+
+
+
+AddEducation.propTypes = {
+  addUserEducation: PropTypes.func.isRequired
+};
+
+export default connect(null, { addUserEducation })(AddEducation);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import React, { Component } from 'react';
 // import { Link, withRouter } from 'react-router-dom';
 // import TextFieldGroup from '../common/TextFieldGroup';
@@ -166,11 +323,3 @@
 // );
 
 
-import React from 'react'
-
-const AddEducation = () => {
-  return (
-    <div>AddEducation</div>
-  )
-}
-export default AddEducation;

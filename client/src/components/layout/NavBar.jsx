@@ -17,6 +17,13 @@ const Navbar = ({
   const userLinks = (
     <ul>
       <li>
+        <Link to="/companyProfiles">Companies</Link>
+      </li>
+      <li>
+        <Link to="/userProfiles">Users</Link>
+      </li>
+      <li>
+
         <Link to="/userdashboard">
           {/* <i className="fas fa-user" /> */}
           <span className="hide-sm">Dashboard</span>
@@ -33,6 +40,12 @@ const Navbar = ({
 
   const companyLinks = (
     <ul>
+      <li>
+        <Link to="/companyProfiles">Companies</Link>
+      </li>
+      <li>
+        <Link to="/userProfiles">Users</Link>
+      </li>
       <li>
         <Link to="/companydashboard">
           {/* <i className="fas fa-user" /> */}
@@ -51,7 +64,10 @@ const Navbar = ({
   const guestLinks = (
     <ul>
       <li>
-        <Link to="#!">Companies</Link>
+        <Link to="/companyProfiles">Companies</Link>
+      </li>
+      <li>
+        <Link to="/userProfiles">Users</Link>
       </li>
       <li>
         <Link to="/signUpCompany">Register Company</Link>

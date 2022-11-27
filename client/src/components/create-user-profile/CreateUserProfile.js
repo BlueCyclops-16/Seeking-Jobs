@@ -216,3 +216,4 @@ CreateUserProfile.propTypes = {
 export default connect(null, { createUserProfile })(
   withRouter(CreateUserProfile)
 );
+

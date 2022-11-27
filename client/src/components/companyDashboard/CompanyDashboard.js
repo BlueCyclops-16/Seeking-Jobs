@@ -65,12 +65,3 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(CompanyDashboard);
 
 
-// import React from 'react'
-
-// const CompanyDashboard = () => {
-//   return (
-//     <div>CompanyDashboard</div>
-//   )
-// }
-
-// export default CompanyDashboard;

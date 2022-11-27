@@ -17,6 +17,10 @@ import UserDashboard from "./components/userDashboard/UserDashboard";
 import CompanyDashboard from "./components/companyDashboard/CompanyDashboard";
 import AddEducation from './components/add-credentials/AddEducation';
 import AddExperiece from './components/add-credentials/AddExperience';
+import UserProfiles from './components/userProfiles/UserProfiles';
+import UserProfile from './components/userProfile/UserProfile';
+import CompanyProfiles from './components/companyProfiles/CompanyProfiles';
+import CompanyProfile from './components/companyProfile/CompanyProfile';
 
 // Redux
 import { loadUser } from "./actions/userAuthActions";
@@ -55,6 +59,14 @@ const App = ({ userAuth: { isAuthenticated: userAuthenticated, loading: userLoad
 
         <Route path="/logInCompany" element={<section className="container"><LogInCompany />{" "}</section>} />
 
+        <Route path="/userProfiles" element={<section className="container"><UserProfiles />{" "}</section>} />
+
+        <Route path="/userProfile/:id" element={<section className="container"><UserProfile />{" "}</section>} />
+
+        <Route path="/companyProfiles" element={<section className="container"><CompanyProfiles />{" "}</section>} />
+
+        <Route path="/companyProfile/:id" element={<section className="container"><CompanyProfile />{" "}</section>} />
+
         <Route
           path="/userdashboard"
           element={
@@ -89,7 +101,7 @@ const App = ({ userAuth: { isAuthenticated: userAuthenticated, loading: userLoad
         />
 
         <Route
-          path="/edit-profile"
+          path="/edit-user-profile"
           element={
             <section className="container">
               <PrivateRoute isAuthenticated={userAuthenticated} loading={userLoading}>

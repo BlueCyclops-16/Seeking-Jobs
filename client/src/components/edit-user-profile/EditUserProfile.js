@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   createUserProfile,
@@ -19,7 +20,7 @@ function withRouter(Component) {
 }
 
 const EditUserProfile = ({
-  profile: { profile, loading },
+  profile: { userProfile, loading },
   createUserProfile,
   getCurrentProfile,
   history,
@@ -45,19 +46,19 @@ const EditUserProfile = ({
     getCurrentProfile();
 
     setFormData({
-      name: loading || !profile.name ? "" : profile.name,
-      location: loading || !profile.location ? "" : profile.location,
-      status: loading || !profile.status ? "" : profile.status,
-      skills: loading || !profile.skills ? "" : profile.skills,
+      name: loading || !userProfile.name ? "" : userProfile.name,
+      location: loading || !userProfile.location ? "" : userProfile.location,
+      status: loading || !userProfile.status ? "" : userProfile.status,
+      skills: loading || !userProfile.skills ? "" : userProfile.skills,
       githubusername:
-        loading || !profile.githubusername ? "" : profile.githubusername,
-      resumelink: loading || !profile.resumelink ? "" : profile.resumelink,
-      bio: loading || !profile.bio ? "" : profile.bio,
-      twitter: loading || !profile.social ? "" : profile.social.twitter,
-      facebook: loading || !profile.social ? "" : profile.social.facebook,
-      linkedin: loading || !profile.social ? "" : profile.social.linkedin,
-      youtube: loading || !profile.social ? "" : profile.social.youtube,
-      instagram: loading || !profile.social ? "" : profile.social.instagram,
+        loading || !userProfile.githubusername ? "" : userProfile.githubusername,
+      resumelink: loading || !userProfile.resumelink ? "" : userProfile.resumelink,
+      bio: loading || !userProfile.bio ? "" : userProfile.bio,
+      twitter: loading || !userProfile.social ? "" : userProfile.social.twitter,
+      facebook: loading || !userProfile.social ? "" : userProfile.social.facebook,
+      linkedin: loading || !userProfile.social ? "" : userProfile.social.linkedin,
+      youtube: loading || !userProfile.social ? "" : userProfile.social.youtube,
+      instagram: loading || !userProfile.social ? "" : userProfile.social.instagram,
     });
   }, [loading, getCurrentProfile]);
 
@@ -262,9 +263,9 @@ const EditUserProfile = ({
           )}
 
           <input type="submit" className="btn btn-primary my-1" />
-          <a className="btn btn-light my-1" href="dashboard.html">
+          <Link to='/userdashboard' className="btn btn-light my-1" >
             Go Back
-          </a>
+          </Link>
         </form>
       </section>
     </Fragment>
@@ -278,13 +279,15 @@ EditUserProfile.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  profile: state.profile,
+  profile: state.userProfileReducer,
 });
 
 export default connect(mapStateToProps, {
   createUserProfile,
   getCurrentProfile,
 })(withRouter(EditUserProfile));
+
+
 
 // import React, { Component } from 'react';
 // import { connect } from 'react-redux';
